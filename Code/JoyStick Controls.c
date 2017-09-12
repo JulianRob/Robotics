@@ -7,6 +7,6 @@ task main()
 	while (1 == 1)
 	{
 	motor[FRWheel] = vexRT(Ch2)*.98;
-	motor[BLWheel] = vexRT(Ch3)*.98;
+	motor[BLWheel] = vexRT(Ch3)*-.98;
 	}
 }
