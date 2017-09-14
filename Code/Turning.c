@@ -1,5 +1,5 @@
-#pragma config(Motor,  port1,           RWheel,       tmotorVex393_HBridge, openLoop)
-#pragma config(Motor,  port10,          LWheel,       tmotorVex393_HBridge, openLoop)
+#pragma config(Motor,  port4,           RWheel,       tmotorVex393_HBridge, openLoop)
+#pragma config(Motor,  port3,          LWheel,       tmotorVex393_HBridge, openLoop)
 
 //This turns the robot to the left.
 void turnLeft()
