@@ -11,7 +11,7 @@ task main()
  	SensorValue[rightEncoder] = 0;
  	SensorValue[leftEncoder] = 0;
  	while(SensorValue[leftEncoder] < 1260)
-{
+	{
  		 if(SensorValue[leftEncoder] > SensorValue[rightEncoder])
  			{
  		 		motor[rightMotor] = 63;
@@ -29,9 +29,11 @@ task main()
  			motor[rightMotor] = 63;
  			motor[leftMotor] = 63;
 		}
+
+		SensorValue[rightEncoder] = 0;
+ 		SensorValue[leftEncoder] = 0;
 	}
 
- 	SensorValue[rightEncoder] = 0;
- 	SensorValue[leftEncoder] = 0;
+
 
 }
