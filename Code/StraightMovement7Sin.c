@@ -27,16 +27,16 @@ task main()
 			motor[leftMotor] = 50;
 			motor[rightMotor] = 50;
 		}
-		else if(SensorValue[rightEncoder] < SensorValue[leftEncoder])
+		if(SensorValue[rightEncoder] < SensorValue[leftEncoder])
 			{
 				motor[leftMotor] = 50;
-				motor[rightMotor] = 30;
+				motor[rightMotor] = 50*abs(cosDegrees(SensorValue[rightEncoder]-SensorValue[leftEncoder]));
 		//	int difference = SensorValue[rightEncoder] - SensorValue[leftEncoder]; //Degreees
 		//	motor[leftMotor] += difference;
 			}
 		else if(SensorValue[leftEncoder] < SensorValue[rightEncoder])
 			{
-				motor[leftMotor] = 30;
+				motor[leftMotor] = 50*abs(cosDegrees(SensorValue[rightEncoder]-SensorValue[leftEncoder]));
 				motor[rightMotor] = 50;
 //30 and 50 = 10/10
 //40 and 50 = bad
