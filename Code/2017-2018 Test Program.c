@@ -7,12 +7,12 @@
 task main()
 {
 
-		while (true)
+		whil
+		e (true)
 		{
 			motor(BRWheel) = vexRT[Ch2];
 			motor(FRWheel) = vexRT[Ch2];
 			motor(BLWheel) = vexRT[Ch3];
 			motor(FLWheel) = vexRT[Ch3];
-
 			}
 }
