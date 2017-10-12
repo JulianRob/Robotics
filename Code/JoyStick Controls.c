@@ -17,7 +17,7 @@ task main()
 		motor[LClaw] = 10
 	}
 		
-	if(vexRT[Btn5D] == 1) //WHEN BUTTON 5D IS PUSHED, THEN THE LEFT CLAW MOTOR WILL BE SET TO -20
+	else if(vexRT[Btn5D] == 1) //WHEN BUTTON 5D IS PUSHED, THEN THE LEFT CLAW MOTOR WILL BE SET TO -20
 	{
 		motor[LClaw] = -10
 	}
@@ -27,7 +27,7 @@ task main()
 		motor[RClaw] = 10
 	}
 		
-	if(vexRT[Btn6D] == 1) //WHEN BUTTON 6D IS PUSHED, THEN THE LEFT CLAW MOTOR WILL BE SET TO -20
+	else if(vexRT[Btn6D] == 1) //WHEN BUTTON 6D IS PUSHED, THEN THE LEFT CLAW MOTOR WILL BE SET TO -20
 	{
 		motor[RClaw] = -10
 	}
