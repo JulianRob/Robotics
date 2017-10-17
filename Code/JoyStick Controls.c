@@ -9,24 +9,24 @@ task main()
 {
 	while (1 == 1)
 	{
-	motor[RWheel] = vexRT(Ch2)*.98;
-	motor[LWheel] = vexRT(Ch3)*-.98;
+	motor[RWheel] = vexRT(Ch2)*-.98;
+	motor[LWheel] = vexRT(Ch3)*.98;
 
-	if(vexRT[Btn5U] == 1) //WHEN BUTTON 5U IS PUSHED, THEN THE LEFT CLAW MOTOR WILL BE SET TO 20
+	if(vexRT[Btn6U] == 1) //WHEN BUTTON 5U IS PUSHED, THEN THE LEFT CLAW MOTOR WILL BE SET TO 20
 	{
 		motor[LClaw] = 50;
 		motor[RClaw] = 50;
 	}
 
-	else if(vexRT[Btn5D] == 1) //WHEN BUTTON 5D IS PUSHED, THEN THE LEFT CLAW MOTOR WILL BE SET TO -20
+	else if(vexRT[Btn6D] == 1) //WHEN BUTTON 5D IS PUSHED, THEN THE LEFT CLAW MOTOR WILL BE SET TO -20
 	{
 		motor[LClaw] = -50;
 		motor[LClaw] = -50;
 	}
 	else
 		{
-		motor[LClaw] = -50;
-		motor[LClaw] = -50;	
+		motor[LClaw] = 0;
+		motor[LClaw] = 0;	
 		
 	}
 
