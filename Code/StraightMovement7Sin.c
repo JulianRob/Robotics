@@ -3,20 +3,19 @@
 #pragma config(Motor,  port3,           leftMotor,     tmotorVex393_MC29, openLoop)
 #pragma config(Motor,  port4,           rightMotor,    tmotorVex393_MC29, openLoop, reversed)
 
+float test = 5;
 
 task main()
 {
-
-	float tile = 23.5 //In inches
 	int limit = 0;
-
+	float tile = 23.25;
 	SensorValue[leftEncoder] = 0;
 	SensorValue[rightEncoder] = 0;
 
 	float diameterOfWheel = 4.25; //inches
   float circumference = diameterOfWheel*PI;
 
-  float distanceToGo = tile*(1); //number of tile lengths to go
+  float distanceToGo = tile*1; //inches
 
   float rotations = distanceToGo/circumference;
   float degreesToTurn = rotations*360; //Degrees to turn to go distance.
@@ -43,11 +42,22 @@ task main()
 		//	motor[rightMotor] += difference;
 
 			}
+		// test = (SensorValue[rightEncoder]-SensorValue[leftEncoder]);
 
-			if(degreesToTurn < abs(SensorValue[leftEncoder]) && degreesToTurn > abs(SensorValue[rightEncoder])) //This allows it to move a certain distance.
+			if(degreesToTurn < abs(SensorValue[leftEncoder]) && degreesToTurn < abs(SensorValue[rightEncoder]))
 			{
-				limit = 1;
+				limit+=1;
 			}
-
 	}
 }
+//30 and 50 = 10/10
+//40 and 50 = bad
+//20 and 50 = bad, jittery
+//20 and 40 = 7/10 good but slow
+//50 and 70 = bad, moving to side
+//70 and 60 = bad
+//70 and 40 = good, but moving to side
+//70 and 20 = good, but jittery
+//90 and 20 = good, but jittery
+//100 and 20 = very fast and good, but jittery
+//100 and 80 = very bad, too fast, moving to left side
