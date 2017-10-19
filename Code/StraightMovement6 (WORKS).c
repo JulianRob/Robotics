@@ -39,6 +39,14 @@ task main()
 			{
 				motor[leftMotor] = 30;
 				motor[rightMotor] = 50;
+
+		//	int difference = SensorValue[leftEncoder] - SensorValue[rightEncoder];
+		//	motor[rightMotor] += difference;
+			}
+	}
+
+}
+
 //30 and 50 = 10/10
 //40 and 50 = bad
 //20 and 50 = bad, jittery
@@ -50,10 +58,3 @@ task main()
 //90 and 20 = good, but jittery
 //100 and 20 = very fast and good, but jittery
 //100 and 80 = very bad, too fast, moving to left side
-
-		//	int difference = SensorValue[leftEncoder] - SensorValue[rightEncoder];
-		//	motor[rightMotor] += difference;
-			}
-	}
-
-}
