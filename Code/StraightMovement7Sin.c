@@ -2,31 +2,34 @@
 #pragma config(Sensor, dgtl3,  rightEncoder,   sensorQuadEncoder)
 #pragma config(Motor,  port3,           leftMotor,     tmotorVex393_MC29, openLoop)
 #pragma config(Motor,  port4,           rightMotor,    tmotorVex393_MC29, openLoop, reversed)
-
-float test = 5;
+//This configurizes the motors and encoders to their correct ports.
 
 task main()
 {
-	int limit = 0;
-	float tile = 23.25;
-	SensorValue[leftEncoder] = 0;
-	SensorValue[rightEncoder] = 0;
+	SensorValue[leftEncoder] = 0; //The leftEncoder keeps track of the degrees turned by the wheels of the leftMotor
+	SensorValue[rightEncoder] = 0;//The rightEncoder keeps track of the degrees turned by the wheels of the rightMotor
+	//Sets the encoders to their default value of 0.
 
-	float diameterOfWheel = 4.25; //inches
-  float circumference = diameterOfWheel*PI;
+	int limit = 0; //Stops the while loop when the robot moves a certain distance
 
-  float distanceToGo = tile*1; //inches
+	//Data gathered from measured values
+	float diameterOfWheel = 4.25; //Diameter of each wheel in inches
+	float tile = 23.25; //Length of each tile in inches on the field
 
-  float rotations = distanceToGo/circumference;
-  float degreesToTurn = rotations*360; //Degrees to turn to go distance.
-	while(limit==0)
+	//Applications of the measured values
+	float distanceToGo = tile*1; //Distance the robot needs to go in inches.
+  float circumference = diameterOfWheel*PI; //Finds the circumference of each wheel in inches
+  float rotations = distanceToGo/circumference; //Number of rotations the wheels turn to go a certain distance
+  float degreesToTurn = rotations*360; //Degrees the wheels must turn in order to go a certain distance
+
+	while(limit == 0) //Loop will run continuously until the limit value is changed
 	{
-		if(SensorValue[rightEncoder] == SensorValue[leftEncoder])
+		if(SensorValue[rightEncoder] == SensorValue[leftEncoder]) //If the sensor values are equal, then all the wheels must be turning equally
 		{
-			motor[leftMotor] = 40;
-			motor[rightMotor] = 40;
+			motor[leftMotor] = 40;  //Sets the speed of the left wheels
+			motor[rightMotor] = 40; //Sets the speed of the right wheels
 		}
-		if(SensorValue[rightEncoder] < SensorValue[leftEncoder])
+		if(SensorValue[rightEncoder] < SensorValue[leftEncoder]) //If the
 			{
 				motor[leftMotor] = 40;
 				motor[rightMotor] = 40*abs(cosDegrees(SensorValue[rightEncoder]-SensorValue[leftEncoder]));
