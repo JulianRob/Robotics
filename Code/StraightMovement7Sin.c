@@ -29,23 +29,20 @@ task main()
 			motor[leftMotor] = 40;  //Sets the speed of the left wheels
 			motor[rightMotor] = 40; //Sets the speed of the right wheels
 		}
-		if(SensorValue[rightEncoder] < SensorValue[leftEncoder]) //If the
+		if(SensorValue[rightEncoder] < SensorValue[leftEncoder]) //If the the right wheels turn slower than the left wheels
 			{
-				motor[leftMotor] = 40;
+				motor[leftMotor] = 40; //Sets the speed of the left wheels
 				motor[rightMotor] = 40*abs(cosDegrees(SensorValue[rightEncoder]-SensorValue[leftEncoder]));
-		//	int difference = SensorValue[rightEncoder] - SensorValue[leftEncoder]; //Degreees
-		//	motor[leftMotor] += difference;
+				/*The right motor is slowed down so that the left wheels can catch up to the speed of the right wheels
+				This is done by multiplying 40
+				*/
+
 			}
 		else if(SensorValue[leftEncoder] < SensorValue[rightEncoder])
 			{
 				motor[leftMotor] = 40*abs(cosDegrees(SensorValue[rightEncoder]-SensorValue[leftEncoder]));
 				motor[rightMotor] = 40;
-
-		//	int difference = SensorValue[leftEncoder] - SensorValue[rightEncoder];
-		//	motor[rightMotor] += difference;
-
 			}
-		// test = (SensorValue[rightEncoder]-SensorValue[leftEncoder]);
 
 			if(degreesToTurn < abs(SensorValue[leftEncoder]) && degreesToTurn < abs(SensorValue[rightEncoder]))
 			{
@@ -53,14 +50,3 @@ task main()
 			}
 	}
 }
-//30 and 50 = 10/10
-//40 and 50 = bad
-//20 and 50 = bad, jittery
-//20 and 40 = 7/10 good but slow
-//50 and 70 = bad, moving to side
-//70 and 60 = bad
-//70 and 40 = good, but moving to side
-//70 and 20 = good, but jittery
-//90 and 20 = good, but jittery
-//100 and 20 = very fast and good, but jittery
-//100 and 80 = very bad, too fast, moving to left side
