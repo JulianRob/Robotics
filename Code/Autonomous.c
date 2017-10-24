@@ -2,7 +2,10 @@
 #pragma config(Sensor, dgtl3,  rightEncoder,   sensorQuadEncoder)
 #pragma config(Motor,  port3,           leftMotor,     tmotorVex393_MC29, openLoop)
 #pragma config(Motor,  port4,           rightMotor,    tmotorVex393_MC29, openLoop, reversed)
-//This configurizes the motors and encoders to their correct ports.
+#pragma config(Motor,  port7,           leftClaw,       tmotorVex393_HBridge, openLoop)
+#pragma config(Motor,  port9,           rightClaw,       tmotorVex393_HBridge, openLoop)
+
+//This configurizes the motors, encoders and claws to their correct ports.
 
 int test = 0;
 int test2 = 40;
@@ -72,6 +75,7 @@ task main()
             if(degreesToTurn <= abs(SensorValue[leftEncoder]) && degreesToTurn <= abs(SensorValue[rightEncoder]))
             {
                 limit = 1;
+                test3 = 0;
             }
             //If the number of degrees to turn is less than both the absolute value of the encoder values, the limit will increase so
             //that the while loop it's inside of will stop.
