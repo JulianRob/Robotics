@@ -77,22 +77,56 @@ task main()
             //that the while loop it's inside of will stop.
             //test = (SensorValue[rightEncoder]-SensorValue[leftEncoder]);
         }
-        
-        while(limit == 1)
+    }
+    
+    while(limit == 1)
         {
-            SensorValue[leftEncoder] = 0;
-            SensorValue[rightEncoder] = 0;
-            motor[leftMotor] = 40;
-            wait1Msec(3000);
+            
+            //Place the yellow cone onto the red cone
             limit = 2;
         }
         
-        while(limit == 2)
+    while(limit == 2)
         {
-            
+            //Lift up the red cone
+            limit = 3;
         }
         
+    while(limit == 3)
+        {
+            //Move backwards by 1.5 tiles
+            limit = 4;
+        }
+    
+    while(limit == 4)
+        {
+            //Turn to the right by 135 degrees
+            limit = 5;
+        }
+    
+    while(limit == 5)
+        {
+            //Go straight for root 2 of a tile
+            limit = 6;
+        }
+    
+    while(limit == 6)
+        {
+            //Turn 90 degrees to the right again
+            limit = 7;
+        }
+    
+    while(limit == 7)
+        {
+            //Move the car forward for 1 tile
+            limit = 8;
+        }
+    
+    while(limit == 8)
+    {
+        //Drop the red cone
     }
+    //FINISH!!!!
 }
 
 /*
@@ -105,3 +139,12 @@ task main()
  test = (SensorValue[rightEncoder]-SensorValue[leftEncoder]);
  
  */
+
+/*
+ SensorValue[leftEncoder] = 0;
+ SensorValue[rightEncoder] = 0;
+ motor[leftMotor] = 40;
+ wait1Msec(3000);
+ */
+
+
