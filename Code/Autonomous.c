@@ -68,17 +68,30 @@ task main()
                 motor[leftMotor] = 40*abs(cosDegrees(SensorValue[rightEncoder]-SensorValue[leftEncoder])); //Similar function as above
                 motor[rightMotor] = 40; //Sets the speed of the right wheels
             }
-            /*
-             if(degreesToTurn < abs(SensorValue[leftEncoder]) && degreesToTurn < abs(SensorValue[rightEncoder]))
-             {
-             limit+=1;
-             }
-             If the number of degrees to turn is less than both the absolute value of the encoder values, the limit will increase so
-             that the while loop it's inside of will stop.
-             */
             
-            test = (SensorValue[rightEncoder]-SensorValue[leftEncoder]);
+            if(degreesToTurn <= abs(SensorValue[leftEncoder]) && degreesToTurn <= abs(SensorValue[rightEncoder]))
+            {
+                limit = 1;
+            }
+            //If the number of degrees to turn is less than both the absolute value of the encoder values, the limit will increase so
+            //that the while loop it's inside of will stop.
+            //test = (SensorValue[rightEncoder]-SensorValue[leftEncoder]);
         }
+        
+        while(limit == 1)
+        {
+            SensorValue[leftEncoder] = 0;
+            SensorValue[rightEncoder] = 0;
+            motor[leftMotor] = 40;
+            wait1Msec(3000);
+            limit = 2;
+        }
+        
+        while(limit == 2)
+        {
+            
+        }
+        
     }
 }
 
