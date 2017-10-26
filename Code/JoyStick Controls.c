@@ -27,8 +27,7 @@ task main()
 		{
 		motor[LClaw] = 0;
 		motor[RClaw] = 0;
-
-	}
+		}
 
 	}
 }
