@@ -8,8 +8,8 @@ task main()
 {
 	while (1 == 1)
 	{
-	motor[RWheel] = vexRT(Ch2)*-.98;
-	motor[LWheel] = vexRT(Ch3)*.98;
+	motor[RWheel] = vexRT(Ch2)*-2;
+	motor[LWheel] = vexRT(Ch3)*1;
 
 	if(vexRT[Btn6U] == 1) //WHEN BUTTON 5U IS PUSHED, THEN THE LEFT CLAW MOTOR WILL BE SET TO 20
 	{

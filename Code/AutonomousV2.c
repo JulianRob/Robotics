@@ -1,15 +1,14 @@
 #pragma config(Sensor, dgtl1,  leftEncoder,    sensorQuadEncoder)
 #pragma config(Sensor, dgtl3,  rightEncoder,   sensorQuadEncoder)
 #pragma config(Motor,  port3,           leftMotor,     tmotorVex393_MC29, openLoop)
-#pragma config(Motor,  port4,           rightMotor,    tmotorVex393_MC29, openLoop, reversed)
-#pragma config(Motor,  port7,           leftClaw,       tmotorVex393_HBridge, openLoop)
-#pragma config(Motor,  port9,           rightClaw,       tmotorVex393_HBridge, openLoop)
-
-//This configurizes the motors, encoders and claws to their correct ports.
+#pragma config(Motor,  port5,           rightMotor,    tmotorVex393_MC29, openLoop, reversed)
+#pragma config(Motor,  port7,           RClaw,         tmotorVex393_MC29, openLoop, reversed)
+#pragma config(Motor,  port9,           LClaw,         tmotorVex393_MC29, openLoop)
 
 int test = 0;
-int test2 = 40;
+int test2 = 20;
 int test3 = 0;
+bool yes = false;
 
 task main()
 {
@@ -24,32 +23,38 @@ task main()
     float tile = 23.25; //Length of each tile in inches on the field
 
     //Applications of the measured values
-    float distanceToGo = tile*1; //Distance the robot needs to go in inches.
+    float distanceToGo = tile; //Distance the robot needs to go in inches.
     float circumference = diameterOfWheel*PI; //Finds the circumference of each wheel in inches
     float rotations = distanceToGo/circumference; //Number of rotations the wheels turn to go a certain distance
     float degreesToTurn = rotations*360; //Degrees the wheels must turn in order to go a certain distance
 
     while(limit == 0) //Loop will run continuously until the limit value is changed
     {
-
-        if(test2 >= abs(SensorValue[rightEncoder]-SensorValue[leftEncoder]) && test3 >= 1000)
+        if(test2 >= abs(SensorValue[rightEncoder]-SensorValue[leftEncoder]) && yes)
         {
             test3+=1;
-            if(SensorValue[rightEncoder] < SensorValue[leftEncoder]) //If the the right wheels turn slower than the left wheels
+            test = (SensorValue[rightEncoder]-SensorValue[leftEncoder]);
+            if(SensorValue[rightEncoder] <= SensorValue[leftEncoder]) //If the the right wheels turn slower than the left wheels
             {
                 motor[leftMotor] = 40;
                 motor[rightMotor] = 30.5;
             }
 
-            if(SensorValue[leftEncoder] < SensorValue[rightEncoder])
+            if(SensorValue[leftEncoder] <= SensorValue[rightEncoder])
             {
                 motor[leftMotor] = 30.5;
                 motor[rightMotor] = 40;
             }
+
+            if(SensorValue[rightEncoder] == SensorValue[leftEncoder])
+            {
+            		motor[leftMotor] = 40;
+                motor[rightMotor] = 40;
+          	}
+
         }
         else
         {
-
             if(SensorValue[rightEncoder] == SensorValue[leftEncoder]) //If the sensor values are equal, then all the wheels must be turning equally
             {
                 motor[leftMotor] = 40;  //Sets the speed of the left wheels
@@ -72,81 +77,65 @@ task main()
                 motor[rightMotor] = 40; //Sets the speed of the right wheels
             }
 
-            if(degreesToTurn <= abs(SensorValue[leftEncoder]) && degreesToTurn <= abs(SensorValue[rightEncoder]))
+        if(degreesToTurn < abs(SensorValue[leftEncoder]) && degreesToTurn < abs(SensorValue[rightEncoder]))
             {
-                limit = 1;
-                test3 = 0;
+            	  limit = 1;
+            	 /*If the number of degrees to turn is less than both the absolute value of
+            	 the encoder values, the limit will equal 1 in order to break outside of the while loop. */
             }
-            //If the number of degrees to turn is less than both the absolute value of the encoder values, the limit will increase so
-            //that the while loop it's inside of will stop.
-            //test = (SensorValue[rightEncoder]-SensorValue[leftEncoder]);
-        }
-    }
+   			}
+     }
 
-    while(limit == 1)
-        {
-
-            //Place the yellow cone onto the red cone
-            limit = 2;
-        }
+    while(limit == 1) //Loop will run continuously until the value of the limit changes like before.
+    {
+    	//If we want to place down the yellow cone, we will be using the scissor lift.
+    	//Place the yellow cone onto the red cone
+      limit = 2;
+ 	  }
 
     while(limit == 2)
-        {
-            //Lift up the red cone
-            limit = 3;
-        }
-
-    while(limit == 3)
-        {
-            //Move backwards by 1.5 tiles
-            limit = 4;
-        }
-
-    while(limit == 4)
-        {
-            //Turn to the left by 135 degrees
-            limit = 5;
-        }
-
-    while(limit == 5)
-        {
-            //Go straight for root 2 of a tile
-            limit = 6;
-        }
-
-    while(limit == 6)
-        {
-            //Turn 90 degrees to the right again
-            limit = 7;
-        }
-
-    while(limit == 7)
-        {
-            //Move the car forward for 1 tile
-            limit = 8;
-        }
-
-    while(limit == 8)
     {
-        //Drop the red cone
-    }
-    //FINISH!!!!
+    	//Lift up the red cone
+    	limit = 3;
+  	}
+
+  	while(limit == 3)
+    {
+    	//Move backwards by 1.5 tiles
+    	limit = 4;
+  	}
+
+  	while(limit == 4)
+    {
+    	//Turn to the left by 135 degrees
+    	limit = 5;
+  	}
+
+  	while(limit == 5)
+    {
+    	//Go straight for root 2 of a tile.
+    	limit = 6;
+  	}
+
+  	while(limit == 6)
+    {
+    	//Turn 90 degrees to the left again.
+    	limit = 7;
+  	}
+
+  	while(limit == 7)
+    {
+    	//Move the car forward for 1 tile
+    	limit = 8;
+  	}
+
+  	while(limit == 8)
+  	{
+  		//Drop the red cone
+  		limit = 9;
+  		wait1Msec(5000);
+  	}
+  	//FINISH
+  	//Simulate this team:
+  	//https://www.youtube.com/watch?v=MvlU9TCRpuQ
 }
-
-/*
- Notes:
- The problem with the robot is that it takes a second to synch the motors together. How could we make it sync faster?
- Options
- 1.) What if we set the decoder values to which they become equal? So instead of setting the decoder values to 0, you could
- set them up to have a greater value.
-
- test = (SensorValue[rightEncoder]-SensorValue[leftEncoder]);
-
- */
-
-/*
- SensorValue[leftEncoder] = 0;
- SensorValue[rightEncoder] = 0;
- motor[leftMotor] = 40;
- wait1Msec(3000);
- */
