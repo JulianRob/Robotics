@@ -57,7 +57,12 @@ task main()
         	 motor[leftMotor] = 0;
         	 SensorValue[leftEncoder] = 0;
         	 SensorValue[rightEncoder] = 0;
-        	 wait1Msec(1000);
+
+        	  distanceToGo = tile*1.5; //Distance the robot needs to go in inches.
+            rotations = distanceToGo/circumference; //Number of rotations the wheels turn to go a certain distance
+            degreesToTurn = rotations*360; //Degrees the wheels must turn in order to go a certain distance
+
+            wait1Msec(1000);
          }
     }
 
@@ -100,7 +105,7 @@ task main()
 
     while(limit == 2)
     {
-			 if(abs(SensorValue[rightEncoder]) == abs(SensorValue[leftEncoder]))
+					  if(abs(SensorValue[rightEncoder]) == abs(SensorValue[leftEncoder]))
             {
                 motor[leftMotor] = 40;
                 motor[rightMotor] = 40;
@@ -124,26 +129,124 @@ task main()
             	  motor[rightMotor] = 0;
             	  SensorValue[leftEncoder] = 0;
                 SensorValue[rightEncoder] = 0;
+
+		            distanceToGo = tile*sqrt(2); //Distance the robot needs to go in inches.
+		            rotations = distanceToGo/circumference; //Number of rotations the wheels turn to go a certain distance
+		            degreesToTurn = rotations*360; //Degrees the wheels must turn in order to go a certain distance
+
             	  wait1Msec(1000);
             }
   	}
 
   	while(limit == 3)
     {
-    	//Move backwards by 1.5 tiles
-    	limit = 4;
+    	if(SensorValue[rightEncoder] == SensorValue[leftEncoder]) //If the sensor values are equal, then all the wheels must be turning equally
+        {
+            motor[leftMotor] = 40;  //Sets the speed of the left wheels
+            motor[rightMotor] = 40; //Sets the speed of the right wheels
+        }
+
+        if(SensorValue[rightEncoder] < SensorValue[leftEncoder]) //If the the right wheels turn slower than the left wheels
+        {
+            motor[leftMotor] = 40; //Sets the speed of the left wheels
+            motor[rightMotor] = 40*abs(cosDegrees(SensorValue[rightEncoder]-SensorValue[leftEncoder]-43)); //-43
+            /*The right motor is slowed down so that the left wheels can catch up to the speed of the right wheels
+             This is done by finding the absolue value of the cosine of the difference between the left and and right
+             encoders. The absolute value of the cosine of any number will always be between 0 and 1. This value will
+             be multiplied by the base speed of 40 in order to slow the more powerful motor.
+             */
+        }
+        else if(SensorValue[leftEncoder] < SensorValue[rightEncoder])
+        {
+            motor[leftMotor] = 40*abs(cosDegrees(SensorValue[rightEncoder]-SensorValue[leftEncoder]-43)); //Similar function as above //-43
+            motor[rightMotor] = 40; //Sets the speed of the right wheels
+        }
+         //If the number of degrees to turn is less than both the absolute value of the encoder values, the limit will increase so
+         //that the while loop it's inside of will stop.
+
+        if(degreesToTurn < abs(SensorValue[leftEncoder]) && degreesToTurn < abs(SensorValue[rightEncoder]))
+         {
+        	 limit = 4;
+        	 motor[rightMotor] = 0;
+        	 motor[leftMotor] = 0;
+        	 SensorValue[leftEncoder] = 0;
+        	 SensorValue[rightEncoder] = 0;
+        	 Turning = 300;
+
+        	 wait1Msec(1000);
+         }
   	}
 
   	while(limit == 4)
     {
-    	//Turn to the left by 135 degrees
-    	limit = 5;
+    				if(abs(SensorValue[rightEncoder]) == abs(SensorValue[leftEncoder]))
+            {
+                motor[leftMotor] = 40;
+                motor[rightMotor] = 40;
+            }
+
+            if(abs(SensorValue[rightEncoder]) < abs(SensorValue[leftEncoder]))
+            {
+                motor[leftMotor] = 40;
+                motor[rightMotor] = -40*abs(cosDegrees(SensorValue[rightEncoder]-SensorValue[leftEncoder]));
+            }
+            else if(abs(SensorValue[leftEncoder]) < abs(SensorValue[rightEncoder]))
+            {
+                motor[leftMotor] = 40*abs(cosDegrees(SensorValue[rightEncoder]-SensorValue[leftEncoder]));
+                motor[rightMotor] = -40;
+            }
+
+            if(Turning < abs(SensorValue[leftEncoder]) && Turning < abs(SensorValue[rightEncoder]))
+            {
+            	  limit = 5;
+            	  motor[leftMotor] = 0;
+            	  motor[rightMotor] = 0;
+            	  SensorValue[leftEncoder] = 0;
+                SensorValue[rightEncoder] = 0;
+
+                distanceToGo = tile*2; //Distance the robot needs to go in inches.
+		            rotations = distanceToGo/circumference; //Number of rotations the wheels turn to go a certain distance
+		            degreesToTurn = rotations*360; //Degrees the wheels must turn in order to go a certain distance
+
+            	  wait1Msec(1000);
+            }
   	}
 
   	while(limit == 5)
     {
-    	//Go straight for root 2 of a tile.
-    	limit = 6;
+    	if(SensorValue[rightEncoder] == SensorValue[leftEncoder]) //If the sensor values are equal, then all the wheels must be turning equally
+        {
+            motor[leftMotor] = 40;  //Sets the speed of the left wheels
+            motor[rightMotor] = 40; //Sets the speed of the right wheels
+        }
+
+        if(SensorValue[rightEncoder] < SensorValue[leftEncoder]) //If the the right wheels turn slower than the left wheels
+        {
+            motor[leftMotor] = 40; //Sets the speed of the left wheels
+            motor[rightMotor] = 40*abs(cosDegrees(SensorValue[rightEncoder]-SensorValue[leftEncoder]-43)); //-43
+            /*The right motor is slowed down so that the left wheels can catch up to the speed of the right wheels
+             This is done by finding the absolue value of the cosine of the difference between the left and and right
+             encoders. The absolute value of the cosine of any number will always be between 0 and 1. This value will
+             be multiplied by the base speed of 40 in order to slow the more powerful motor.
+             */
+        }
+        else if(SensorValue[leftEncoder] < SensorValue[rightEncoder])
+        {
+            motor[leftMotor] = 40*abs(cosDegrees(SensorValue[rightEncoder]-SensorValue[leftEncoder]-43)); //Similar function as above //-43
+            motor[rightMotor] = 40; //Sets the speed of the right wheels
+        }
+         //If the number of degrees to turn is less than both the absolute value of the encoder values, the limit will increase so
+         //that the while loop it's inside of will stop.
+
+        if(degreesToTurn < abs(SensorValue[leftEncoder]) && degreesToTurn < abs(SensorValue[rightEncoder]))
+         {
+        	 limit = 6;
+        	 motor[rightMotor] = 0;
+        	 motor[leftMotor] = 0;
+        	 SensorValue[leftEncoder] = 0;
+        	 SensorValue[rightEncoder] = 0;
+        	 wait1Msec(1000);
+         }
   	}
 
   	while(limit == 6)
