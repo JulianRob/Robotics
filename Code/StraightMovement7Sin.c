@@ -7,17 +7,14 @@
 //This configurizes the motors and encoders to their correct ports.
 
 int test = 0;
-int test2 = 20;
-int test3 = 0;
 int sum = 0;
 float average = 0;
 int count = 0;
-bool yes = false;
 
 task main()
 {
-    SensorValue[leftEncoder] = 50; //The leftEncoder keeps track of the degrees turned by the wheels of the leftMotor
-    SensorValue[rightEncoder] = 50;//The rightEncoder keeps track of the degrees turned by the wheels of the rightMotor
+    SensorValue[leftEncoder] = 0; //The leftEncoder keeps track of the degrees turned by the wheels of the leftMotor
+    SensorValue[rightEncoder] = 0;//The rightEncoder keeps track of the degrees turned by the wheels of the rightMotor
     //Sets the encoders to their default value of 0.
 
     int limit = 0; //Stops the while loop when the robot moves a certain distance
@@ -34,77 +31,40 @@ task main()
 
     while(limit == 0) //Loop will run continuously until the limit value is changed
     {
-        if(test2 >= abs(SensorValue[rightEncoder]-SensorValue[leftEncoder]) && yes)
+        if(SensorValue[rightEncoder] == SensorValue[leftEncoder]) //If the sensor values are equal, then all the wheels must be turning equally
         {
-            test3+=1;
-            test = (SensorValue[rightEncoder]-SensorValue[leftEncoder]);
-            if(SensorValue[rightEncoder] <= SensorValue[leftEncoder]) //If the the right wheels turn slower than the left wheels
-            {
-                motor[leftMotor] = 40;
-                motor[rightMotor] = 30.5;
-            }
-
-            if(SensorValue[leftEncoder] <= SensorValue[rightEncoder])
-            {
-                motor[leftMotor] = 30.5;
-                motor[rightMotor] = 40;
-            }
-
-            if(SensorValue[rightEncoder] == SensorValue[leftEncoder])
-            {
-            		motor[leftMotor] = 40;
-                motor[rightMotor] = 40;
-          	}
-
+            motor[leftMotor] = 40;  //Sets the speed of the left wheels
+            motor[rightMotor] = 40; //Sets the speed of the right wheels
         }
-        else
+
+        if(SensorValue[rightEncoder] < SensorValue[leftEncoder]) //If the the right wheels turn slower than the left wheels
         {
-
-            if(SensorValue[rightEncoder] == SensorValue[leftEncoder]) //If the sensor values are equal, then all the wheels must be turning equally
-            {
-                motor[leftMotor] = 40;  //Sets the speed of the left wheels
-                motor[rightMotor] = 40; //Sets the speed of the right wheels
-            }
-
-            if(SensorValue[rightEncoder] < SensorValue[leftEncoder]) //If the the right wheels turn slower than the left wheels
-            {
-                motor[leftMotor] = 40; //Sets the speed of the left wheels
-                motor[rightMotor] = 40*abs(cosDegrees(SensorValue[rightEncoder]-SensorValue[leftEncoder]-43)); //-43
-                /*The right motor is slowed down so that the left wheels can catch up to the speed of the right wheels
-                 This is done by finding the absolue value of the cosine of the difference between the left and and right
-                 encoders. The absolute value of the cosine of any number will always be between 0 and 1. This value will
-                 be multiplied by the base speed of 40 in order to slow the more powerful motor.
-                 */
-            }
-            else if(SensorValue[leftEncoder] < SensorValue[rightEncoder])
-            {
-                motor[leftMotor] = 40*abs(cosDegrees(SensorValue[rightEncoder]-SensorValue[leftEncoder]-43)); //Similar function as above //-43
-                motor[rightMotor] = 40; //Sets the speed of the right wheels
-            }
-             //If the number of degrees to turn is less than both the absolute value of the encoder values, the limit will increase so
-           //  that the while loop it's inside of will stop.
-            test = (SensorValue[rightEncoder]-SensorValue[leftEncoder]);
-            sum += test;
-            count += 1;
-            average = sum/count;
+            motor[leftMotor] = 40; //Sets the speed of the left wheels
+            motor[rightMotor] = 40*abs(cosDegrees(SensorValue[rightEncoder]-SensorValue[leftEncoder]-43)); //-43
+            /*The right motor is slowed down so that the left wheels can catch up to the speed of the right wheels
+             This is done by finding the absolue value of the cosine of the difference between the left and and right
+             encoders. The absolute value of the cosine of any number will always be between 0 and 1. This value will
+             be multiplied by the base speed of 40 in order to slow the more powerful motor.
+             */
         }
+        else if(SensorValue[leftEncoder] < SensorValue[rightEncoder])
+        {
+            motor[leftMotor] = 40*abs(cosDegrees(SensorValue[rightEncoder]-SensorValue[leftEncoder]-43)); //Similar function as above //-43
+            motor[rightMotor] = 40; //Sets the speed of the right wheels
+        }
+         //If the number of degrees to turn is less than both the absolute value of the encoder values, the limit will increase so
+         //that the while loop it's inside of will stop.
+        test = (SensorValue[rightEncoder]-SensorValue[leftEncoder]);
+        sum += test;
+        count += 1;
+        average = sum/count;
+
         if(degreesToTurn < abs(SensorValue[leftEncoder]) && degreesToTurn < abs(SensorValue[rightEncoder]))
-             {
-            	 limit+=1;
-            	 motor[rightMotor] = 0;
-            	 motor[leftMotor] = 0;
-            	 wait1Msec(5000);
-             }
+         {
+        	 limit+=1;
+        	 motor[rightMotor] = 0;
+        	 motor[leftMotor] = 0;
+        	 wait1Msec(5000);
+         }
     }
-}
-
-/*
- Notes:
- The problem with the robot is that it takes a second to synch the motors together. How could we make it sync faster?
- Options
- 1.) What if we set the decoder values to which they become equal? So instead of setting the decoder values to 0, you could
- set them up to have a greater value.
-
- test = (SensorValue[rightEncoder]-SensorValue[leftEncoder]);
-
- */
+ }
