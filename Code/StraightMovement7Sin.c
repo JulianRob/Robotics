@@ -40,7 +40,7 @@ task main()
         if(SensorValue[rightEncoder] < SensorValue[leftEncoder]) //If the the right wheels turn slower than the left wheels
         {
             motor[leftMotor] = 40; //Sets the speed of the left wheels
-            motor[rightMotor] = 40*abs(cosDegrees(SensorValue[rightEncoder]-SensorValue[leftEncoder]-43)); //-43
+            motor[rightMotor] = 40*abs(cosDegrees(SensorValue[rightEncoder]-SensorValue[leftEncoder])); //-43
             /*The right motor is slowed down so that the left wheels can catch up to the speed of the right wheels
              This is done by finding the absolue value of the cosine of the difference between the left and and right
              encoders. The absolute value of the cosine of any number will always be between 0 and 1. This value will
@@ -49,7 +49,7 @@ task main()
         }
         else if(SensorValue[leftEncoder] < SensorValue[rightEncoder])
         {
-            motor[leftMotor] = 40*abs(cosDegrees(SensorValue[rightEncoder]-SensorValue[leftEncoder]-43)); //Similar function as above //-43
+            motor[leftMotor] = 40*abs(cosDegrees(SensorValue[rightEncoder]-SensorValue[leftEncoder])); //Similar function as above //-43
             motor[rightMotor] = 40; //Sets the speed of the right wheels
         }
          //If the number of degrees to turn is less than both the absolute value of the encoder values, the limit will increase so
