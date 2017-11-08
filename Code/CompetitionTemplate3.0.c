@@ -3,12 +3,62 @@
 #pragma config(Motor,  port3,           leftMotor,     tmotorVex393_MC29, openLoop)
 #pragma config(Motor,  port5,           rightMotor,    tmotorVex393_MC29, openLoop, reversed)
 #pragma config(Motor,  port7,           RClaw,         tmotorVex393_MC29, openLoop, reversed)
-#pragma config(Motor,  port9,           LClaw,         tmotorVex393_MC29, openLoop)
+#pragma config(Motor,  port9,           FLift,         tmotorVex393_MC29, openLoop)
 
-float ratio = 0;
+/*---------------------------------------------------------------------------*/
+/*                                                                           */
+/*        Description: Competition template for VEX EDR                      */
+/*                                                                           */
+/*---------------------------------------------------------------------------*/
 
-task main()
+// This code is for the VEX cortex platform
+#pragma platform(VEX2)
+
+// Select Download method as "competition"
+#pragma competitionControl(Competition)
+
+//Main competition background code...do not modify!
+#include "Vex_Competition_Includes.c"
+
+/*---------------------------------------------------------------------------*/
+/*                          Pre-Autonomous Functions                         */
+/*                                                                           */
+/*  You may want to perform some actions before the competition starts.      */
+/*  Do them in the following function.  You must return from this function   */
+/*  or the autonomous and usercontrol tasks will not be started.  This       */
+/*  function is only called once after the cortex has been powered on and    */
+/*  not every time that the robot is disabled.                               */
+/*---------------------------------------------------------------------------*/
+
+void pre_auton()
 {
+  // Set bStopTasksBetweenModes to false if you want to keep user created tasks
+  // running between Autonomous and Driver controlled modes. You will need to
+  // manage all user created tasks if set to false.
+  bStopTasksBetweenModes = true;
+
+	// Set bDisplayCompetitionStatusOnLcd to false if you don't want the LCD
+	// used by the competition include file, for example, you might want
+	// to display your team name on the LCD in this function.
+	// bDisplayCompetitionStatusOnLcd = false;
+
+  // All activities that occur before the competition starts
+  // Example: clearing encoders, setting servo positions, ...
+}
+
+/*---------------------------------------------------------------------------*/
+/*                                                                           */
+/*                              Autonomous Task                              */
+/*                                                                           */
+/*  This task is used to control your robot during the autonomous phase of   */
+/*  a VEX Competition.                                                       */
+/*                                                                           */
+/*  You must modify the code to add your own robot specific commands here.   */
+/*---------------------------------------------------------------------------*/
+
+task autonomous()
+{
+		float ratio = 0;
     SensorValue[leftEncoder] = 0; //The leftEncoder keeps track of the degrees turned by the wheels of the leftMotor
     SensorValue[rightEncoder] = 0;//The rightEncoder keeps track of the degrees turned by the wheels of the rightMotor
     //Sets the encoders to their default value of 0.
@@ -273,4 +323,44 @@ task main()
   	//FINISH
   	//Simulate this team:
   	//https://www.youtube.com/watch?v=MvlU9TCRpuQ
+}
+
+/*---------------------------------------------------------------------------*/
+/*                                                                           */
+/*                              User Control Task                            */
+/*                                                                           */
+/*  This task is used to control your robot during the user control phase of */
+/*  a VEX Competition.                                                       */
+/*                                                                           */
+/*  You must modify the code to add your own robot specific commands here.   */
+/*---------------------------------------------------------------------------*/
+
+task usercontrol()
+{
+  	while (1 == 1)
+	{
+	motor[leftMotor] = vexRT(Ch2)*2;
+	motor[rightMotor] = vexRT(Ch3)*1;
+
+	if(vexRT[Btn6U] == 1) //WHEN BUTTON 5U IS PUSHED, THEN THE LEFT CLAW MOTOR WILL BE SET TO 20
+	{
+		motor[FLift] = -90;
+		//motor[LClaw] = -90;
+		//motor[RClaw] = 85;
+	}
+
+	else if(vexRT[Btn6D] == 1) //WHEN BUTTON 5D IS PUSHED, THEN THE LEFT CLAW MOTOR WILL BE SET TO -20
+	{
+		motor[FLift] = 90;
+		//motor[LClaw] = 85;
+		//motor[RClaw] = -90;
+	}
+	else
+		{
+			motor[FLift] = 0;
+		//motor[LClaw] = 0;
+		//motor[RClaw] = 0;
+		}
+
+	}
 }
