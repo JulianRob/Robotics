@@ -76,6 +76,10 @@ task main()
 			SensorValue[rightEncoder] = 0;
 			limit = 3;
 		}
+	}
+
+	while(limit == 4)
+	{
 
 	}
 }
