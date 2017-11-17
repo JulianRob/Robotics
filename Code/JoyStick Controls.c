@@ -74,6 +74,5 @@ task main()
 			motor[scissorLift1] = 0;
 			motor[scissorLift2] = 0;
 		}
-
 	}
 }

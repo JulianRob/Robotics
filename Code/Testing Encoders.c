@@ -11,8 +11,8 @@ task main()
 
 	while(1==1)
 	{
-		motor[leftEncoder] = 50;
-		motor[rightMotor] = 50;
+		motor[leftEncoder] = 90;
+		motor[rightMotor] = 90;
 	}
 }
 
