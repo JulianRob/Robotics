@@ -62,54 +62,39 @@ task autonomous()
   int limit = 0;
 	motor[RWheel] = 0;
 	motor[LWheel] = 0;
-
 	while(limit == 0) //This turns right.
 	{
-		motor[RWheel] = 50;
-		motor[LWheel] = 50;
-		motor[clawGrip] = 50;
-		wait1Msec(1700);
-		limit = 1;
+	 motor[clawGrip] = -50;
+	 wait1Msec(1000);
+	 limit = 1;
 	}
 
-	while(limit == 1) //This goes straight
+	while(limit == 1)
 	{
 		motor[RWheel] = -50;
-		motor[LWheel] = 60;
-		wait1Msec(4000);
+	 	motor[LWheel] = 50;
+	 	motor[clawLift] = 90;
+		wait1Msec(6200);
+		motor[clawLift] = 0;
+		motor[clawGrip] = 0;
+		motor[RWheel] = 0;
+	 	motor[LWheel] = 0;
+		wait1Msec(2000);
 		limit = 2;
 	}
 
-	while (limit == 2)
+	while(limit == 2)
 	{
-		motor[RWheel] = -50;
+		motor[clawGrip] = 50;
+		motor[RWheel] = 50;
 		motor[LWheel] = -50;
-		motor[clawLift] = 50;
-		wait1Msec(450);
+		wait1Msec(2000);
 		limit = 3;
 	}
 
 	while(limit == 3)
 	{
-		motor[clawLift] = 0;
-		motor[RWheel] = -50;
-		motor[LWheel] = 50;
-		wait1Msec(3000);
-		limit = 4;
-	}
 
-	while(limit == 4)
-	{
-		motor[clawGrip] = -50;
-		wait1Msec(500);
-		limit = 5;
-	}
-
-	while(limit == 5)
-	{
-		motor[clawGrip] = 0;
-		motor[RWheel] = 0;
-		motor[LWheel] = 0;
 	}
 }
 

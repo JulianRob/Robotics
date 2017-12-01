@@ -8,8 +8,36 @@
 
 task main()
 {
-	//Move forward
-	//Raise the Claw
-	//Drop the claw
+	int limit = 0;
+	motor[RWheel] = 0;
+	motor[LWheel] = 0;
+	while(limit == 0) //This turns right.
+	{
+	 motor[clawGrip] = -50;
+	 wait1Msec(1000);
+	 limit = 1;
+	}
 
+	while(limit == 1)
+	{
+		motor[RWheel] = -50;
+	 	motor[LWheel] = 50;
+	 	motor[clawLift] = 90;
+		wait1Msec(6200);
+		motor[clawLift] = 0;
+		motor[clawGrip] = 0;
+		motor[RWheel] = 0;
+	 	motor[LWheel] = 0;
+		wait1Msec(2000);
+		limit = 2;
+	}
+
+	while(limit == 2)
+	{
+		motor[clawGrip] = 50;
+		motor[RWheel] = 50;
+		motor[LWheel] = -50;
+		wait1Msec(2000);
+		limit = 3;
+	}
 }
