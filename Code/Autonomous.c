@@ -1,16 +1,21 @@
-#pragma config(Motor,  port2,           clawGrip,      tmotorVex393_MC29, openLoop) //Opens and close
-#pragma config(Motor,  port3,           RWheel,        tmotorVex393_MC29, openLoop, reversed) //Right Wheel
-#pragma config(Motor,  port5,           LWheel,        tmotorVex393_MC29, openLoop, reversed) //Left Wheel
-#pragma config(Motor,  port6,           scissorLift1,  tmotorVex393_MC29, openLoop) //One scissor lift
-#pragma config(Motor,  port7,           scissorLift2,  tmotorVex393_MC29, openLoop, reversed) //The other scissor lift.
-#pragma config(Motor,  port8,           clawLift,      tmotorVex393_MC29, openLoop) // Lifts up the claw.
-#pragma config(Motor,  port9,           FLift,         tmotorVex393_MC29, openLoop, reversed) //Fork Lift
+#pragma config(Motor,  port2,           clawGrip,      tmotorVex393_MC29, openLoop)           //2 Opens and Closes
+#pragma config(Motor,  port3,           RFWheel,       tmotorVex393_MC29, openLoop, reversed) //3 Right Front Wheel
+#pragma config(Motor,  port4,           LBWheel,       tmotorVex393_MC29, openLoop)           //4 Left Back Wheel
+#pragma config(Motor,  port5,           LFWheel,       tmotorVex393_MC29, openLoop, reversed) //5 Left Front Wheel
+#pragma config(Motor,  port6,           RBWheel,       tmotorVex393_MC29, openLoop)           //6 Right Back Wheel
+#pragma config(Motor,  port7,           scissorLift,   tmotorVex393_MC29, openLoop, reversed) //7 Scissorlift
+#pragma config(Motor,  port8,           clawLift,      tmotorVex393_MC29, openLoop)					  //8 Lifts up the claw
+#pragma config(Motor,  port9,           FLift,         tmotorVex393_MC29, openLoop, reversed) //9 Fork Lift
 
 task main()
 {
 	int limit = 0;
-	motor[RWheel] = 0;
-	motor[LWheel] = 0;
+
+	motor[RFWheel] = 0;
+	motor[RBWheel] = 0;
+	motor[LFWheel] = 0;
+	motor[LBWheel] = 0;
+
 	while(limit == 0) //This turns right.
 	{
 	 motor[clawGrip] = -50;
@@ -20,14 +25,28 @@ task main()
 
 	while(limit == 1)
 	{
-		motor[RWheel] = -50;
-	 	motor[LWheel] = 50;
+		motor[RFWheel] = -50;
+		motor[RBWheel] = -50;
+		motor[LFWheel] = 50;
+		motor[LBWheel] = 50;
+
 	 	motor[clawLift] = 90;
-		wait1Msec(6200);
+		wait1Msec(5000);
+
+		motor[RFWheel] = 30;
+		motor[RBWheel] = 30;
+   	motor[LFWheel] = -30;
+  	motor[LBWheel] = -30;
+  	wait1Msec(100);
+
 		motor[clawLift] = 0;
 		motor[clawGrip] = 0;
-		motor[RWheel] = 0;
-	 	motor[LWheel] = 0;
+
+		motor[RFWheel] = 0;
+		motor[RBWheel] = 0;
+   	motor[LFWheel] = 0;
+  	motor[LBWheel] = 0;
+
 		wait1Msec(2000);
 		limit = 2;
 	}
@@ -35,9 +54,22 @@ task main()
 	while(limit == 2)
 	{
 		motor[clawGrip] = 50;
-		motor[RWheel] = 50;
-		motor[LWheel] = -50;
+
+		motor[RFWheel] = 50;
+   	motor[RBWheel] = 50;
+  	motor[LFWheel] = -50;
+  	motor[LBWheel] = -50;
 		wait1Msec(2000);
 		limit = 3;
+	}
+
+	while(limit == 3)
+	{
+		motor[RFWheel] = 0;
+		motor[RBWheel] = 0;
+   	motor[LFWheel] = 0;
+  	motor[LBWheel] = 0;
+  	motor[clawGrip] = 0;
+  	motor[clawLift] = 0;
 	}
 }
