@@ -20,12 +20,12 @@ task main()
 		motor[LFWheel] = vexRT(Ch3)*1;
 		motor[LBWheel] = vexRT(Ch3)*1;
 
-		if(vexRT[Btn7U] == 1) //WHEN SHOULDER BUTTON 5U IS PUSHED, THEN THE LEFT CLAW MOTOR WILL BE SET TO 20
+		if(vexRT[Btn5U] == 1) //WHEN SHOULDER BUTTON 5U IS PUSHED, THEN THE LEFT CLAW MOTOR WILL BE SET TO 20
 		{
 			motor[FLift] = -90;
 		}
 
-		else if(vexRT[Btn7D] == 1) //WHEN SHOULDER BUTTON 5D IS PUSHED, THEN THE LEFT CLAW MOTOR WILL BE SET TO -20
+		else if(vexRT[Btn5D] == 1) //WHEN SHOULDER BUTTON 5D IS PUSHED, THEN THE LEFT CLAW MOTOR WILL BE SET TO -20
 		{
 			motor[FLift] = 90;
 		}
