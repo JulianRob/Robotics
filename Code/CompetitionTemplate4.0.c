@@ -1,11 +1,11 @@
-#pragma config(Motor,  port2,           clawGrip,      tmotorVex393_MC29, openLoop) //Opens and close
-#pragma config(Motor,  port3,           RWheel,        tmotorVex393_MC29, openLoop, reversed) //Right Wheel
-#pragma config(Motor,  port5,           LWheel,        tmotorVex393_MC29, openLoop, reversed) //Left Wheel
-#pragma config(Motor,  port6,           scissorLift1,  tmotorVex393_MC29, openLoop) //One scissor lift
-#pragma config(Motor,  port7,           scissorLift2,  tmotorVex393_MC29, openLoop, reversed) //The other scissor lift.
-#pragma config(Motor,  port8,           clawLift,      tmotorVex393_MC29, openLoop) // Lifts up the claw.
-#pragma config(Motor,  port9,           FLift,         tmotorVex393_MC29, openLoop, reversed) //Fork Lift
-
+#pragma config(Motor,  port2,           clawGrip,      tmotorVex393_MC29, openLoop)           //2 Opens and Closes
+#pragma config(Motor,  port3,           RFWheel,       tmotorVex393_MC29, openLoop, reversed) //3 Right Front Wheel
+#pragma config(Motor,  port4,           LBWheel,       tmotorVex393_MC29, openLoop)           //4 Left Back Wheel
+#pragma config(Motor,  port5,           LFWheel,       tmotorVex393_MC29, openLoop, reversed) //5 Left Front Wheel
+#pragma config(Motor,  port6,           RBWheel,       tmotorVex393_MC29, openLoop)           //6 Right Back Wheel
+#pragma config(Motor,  port7,           scissorLift,   tmotorVex393_MC29, openLoop, reversed) //7 Scissorlift
+#pragma config(Motor,  port8,           clawLift,      tmotorVex393_MC29, openLoop)					  //8 Lifts up the claw
+#pragma config(Motor,  port9,           FLift,         tmotorVex393_MC29, openLoop, reversed) //9 Fork Lift
 /*---------------------------------------------------------------------------*/
 /*                                                                           */
 /*        Description: Competition template for VEX EDR                      */
@@ -59,26 +59,64 @@ void pre_auton()
 
 task autonomous()
 {
-  int limit = 0;
-	motor[RWheel] = 0;
-	motor[LWheel] = 0;
+  int limit = -2;
+
+	motor[RFWheel] = 0;
+	motor[RBWheel] = 0;
+	motor[LFWheel] = 0;
+	motor[LBWheel] = 0;
+
+	while(limit == -2)
+	{
+		motor[clawLift] = 60;
+		motor[clawGrip] = 10;
+		wait1Msec(500);
+		limit = -1;
+	}
+
+	while(limit == -1)
+	{
+		motor[clawLift] = -50;
+		motor[clawGrip] = 10;
+		wait1Msec(500);
+		limit = 0;
+	}
+
 	while(limit == 0) //This turns right.
 	{
 	 motor[clawGrip] = -50;
+	 motor[scissorLift] = -70;
+	 motor[clawLift] = 0;
 	 wait1Msec(1000);
 	 limit = 1;
 	}
 
 	while(limit == 1)
 	{
-		motor[RWheel] = -50;
-	 	motor[LWheel] = 50;
+		motor[RFWheel] = -50;
+		motor[RBWheel] = -50;
+		motor[LFWheel] = 50;
+		motor[LBWheel] = 50;
+
+		motor[scissorLift] = 0;
+
 	 	motor[clawLift] = 90;
-		wait1Msec(6200);
+		wait1Msec(5000);
+
+		motor[RFWheel] = 30;
+		motor[RBWheel] = 30;
+   	motor[LFWheel] = -30;
+  	motor[LBWheel] = -30;
+  	wait1Msec(100);
+
 		motor[clawLift] = 0;
 		motor[clawGrip] = 0;
-		motor[RWheel] = 0;
-	 	motor[LWheel] = 0;
+
+		motor[RFWheel] = 0;
+		motor[RBWheel] = 0;
+   	motor[LFWheel] = 0;
+  	motor[LBWheel] = 0;
+
 		wait1Msec(2000);
 		limit = 2;
 	}
@@ -86,15 +124,23 @@ task autonomous()
 	while(limit == 2)
 	{
 		motor[clawGrip] = 50;
-		motor[RWheel] = 50;
-		motor[LWheel] = -50;
+
+		motor[RFWheel] = 50;
+   	motor[RBWheel] = 50;
+  	motor[LFWheel] = -50;
+  	motor[LBWheel] = -50;
 		wait1Msec(2000);
 		limit = 3;
 	}
 
 	while(limit == 3)
 	{
-
+		motor[RFWheel] = 0;
+		motor[RBWheel] = 0;
+   	motor[LFWheel] = 0;
+  	motor[LBWheel] = 0;
+  	motor[clawGrip] = 0;
+  	motor[clawLift] = 0;
 	}
 }
 
@@ -110,17 +156,22 @@ task autonomous()
 
 task usercontrol()
 {
-  while (true)
-  {
-  	motor[RWheel] = vexRT(Ch2)*-1; //-2?
-		motor[LWheel] = vexRT(Ch3)*1;
+  while (1 == 1)
+	{
+		//Joystick #1: Movement and Lift(ports 3, 4, 5, 6, 9)
 
-		if(vexRT[Btn7U] == 1) //WHEN SHOULDER BUTTON 5U IS PUSHED, THEN THE LEFT CLAW MOTOR WILL BE SET TO 20
+		motor[RFWheel] = vexRT(Ch2)*-1;
+		motor[RBWheel] = vexRT(Ch2)*-1;
+
+		motor[LFWheel] = vexRT(Ch3)*1;
+		motor[LBWheel] = vexRT(Ch3)*1;
+
+		if(vexRT[Btn5U] == 1) //WHEN SHOULDER BUTTON 5U IS PUSHED, THEN THE LEFT CLAW MOTOR WILL BE SET TO 20
 		{
 			motor[FLift] = -90;
 		}
 
-		else if(vexRT[Btn7D] == 1) //WHEN SHOULDER BUTTON 5D IS PUSHED, THEN THE LEFT CLAW MOTOR WILL BE SET TO -20
+		else if(vexRT[Btn5D] == 1) //WHEN SHOULDER BUTTON 5D IS PUSHED, THEN THE LEFT CLAW MOTOR WILL BE SET TO -20
 		{
 			motor[FLift] = 90;
 		}
@@ -129,24 +180,26 @@ task usercontrol()
 			motor[FLift] = 0;
 		}
 
-		if(vexRT[Btn5U] == 1)
+		//Joystick #2: Claw and ScissorLift (ports 2, 6, 7, 8)
+
+		if(vexRT[Btn5UXmtr2] == 1)
 		{
-			motor[clawLift] = 50;
+			motor[clawLift] = 80;
 		}
-		else if(vexRT[Btn5D] == 1)
+		else if(vexRT[Btn5DXmtr2] == 1)
 		{
-			motor[clawLift] = -50;
+			motor[clawLift] = -80;
 		}
 		else
 		{
 			motor[clawLift] = 0;
 		}
 
-		if(vexRT(Btn8R) == 1)
+		if(vexRT(Btn8RXmtr2) == 1)
 		{
 			motor[clawGrip] = 50;
 		}
-		else if(vexRT(Btn8L) == 1)
+		else if(vexRT(Btn8LXmtr2) == 1)
 		{
 			motor[clawGrip]	= -50;
 		}
@@ -155,20 +208,17 @@ task usercontrol()
 			motor[clawGrip] = 0;
 		}
 
-		if(vexRT[Btn6D] == 1)
+		if(vexRT[Btn6DXmtr2] == 1) //down
 		{
-			motor[scissorLift1] = 100;
-			motor[scissorLift2] = 100;
+			motor[scissorLift] = 100;
 		}
-		else if(vexRT[Btn6U] == 1)
+		else if(vexRT[Btn6UXmtr2] == 1) //up
 		{
-			motor[scissorLift1] = -100;
-			motor[scissorLift2] = -100;
+			motor[scissorLift] = -100;
 		}
 		else
 		{
-			motor[scissorLift1] = 0;
-			motor[scissorLift2] = 0;
+			motor[scissorLift] = 0;
 		}
-  }
+	}
 }

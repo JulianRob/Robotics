@@ -9,16 +9,34 @@
 
 task main()
 {
-	int limit = 0;
+	 int limit = -2;
 
 	motor[RFWheel] = 0;
 	motor[RBWheel] = 0;
 	motor[LFWheel] = 0;
 	motor[LBWheel] = 0;
 
+	while(limit == -2)
+	{
+		motor[clawLift] = 60;
+		motor[clawGrip] = 10;
+		wait1Msec(500);
+		limit = -1;
+	}
+
+	while(limit == -1)
+	{
+		motor[clawLift] = -60;
+		motor[clawGrip] = 10;
+		wait1Msec(500);
+		limit = 0;
+	}
+
 	while(limit == 0) //This turns right.
 	{
 	 motor[clawGrip] = -50;
+	 motor[scissorLift] = -50;
+	 motor[clawLift] = 0;
 	 wait1Msec(1000);
 	 limit = 1;
 	}
@@ -29,6 +47,8 @@ task main()
 		motor[RBWheel] = -50;
 		motor[LFWheel] = 50;
 		motor[LBWheel] = 50;
+
+		motor[scissorLift] = 0;
 
 	 	motor[clawLift] = 90;
 		wait1Msec(5000);
