@@ -1,9 +1,10 @@
 Sebastian: 
 Time to stack 3 yellow cones: 
-Best Time: 1 minute 18 seconds
+Best Time: 37 seconds
 
 1.) 1 minute 18 seconds (1/9/2018)
 2.) 1 minute 54 seconds (1/9/2018)
+3.) 37 seconds (1/9/2018)
 
 Julian:
 Time to stack 3 yellow cones:
