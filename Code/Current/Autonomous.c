@@ -1,15 +1,15 @@
 #pragma config(Motor,  port2,           clawGrip,      tmotorVex393_MC29, openLoop)           //2 Opens and Closes
 #pragma config(Motor,  port3,           RFWheel,       tmotorVex393_MC29, openLoop, reversed) //3 Right Front Wheel
 #pragma config(Motor,  port4,           LBWheel,       tmotorVex393_MC29, openLoop)           //4 Left Back Wheel
-#pragma config(Motor,  port5,           LFWheel,       tmotorVex393_MC29, openLoop, reversed) //5 Left Front Wheel
-#pragma config(Motor,  port6,           RBWheel,       tmotorVex393_MC29, openLoop)           //6 Right Back Wheel
+#pragma config(Motor,  port5,           LFWheel,       tmotorVex393_MC29, openLoop)					  //5 Left Front Wheel
+#pragma config(Motor,  port6,           RBWheel,       tmotorVex393_MC29, openLoop, reversed) //6 Right Back Wheel
 #pragma config(Motor,  port7,           scissorLift,   tmotorVex393_MC29, openLoop, reversed) //7 Scissorlift
-#pragma config(Motor,  port8,           clawLift,      tmotorVex393_MC29, openLoop)					  //8 Lifts up the claw
+#pragma config(Motor,  port8,           clawLift,      tmotorVex393_MC29, openLoop)           //8 Lifts up the claw
 #pragma config(Motor,  port9,           FLift,         tmotorVex393_MC29, openLoop, reversed) //9 Fork Lift
 
 task main()
 {
-	 int limit = -2;
+ int limit = -2;
 
 	motor[RFWheel] = 0;
 	motor[RBWheel] = 0;
@@ -19,14 +19,14 @@ task main()
 	while(limit == -2)
 	{
 		motor[clawLift] = 60;
-		motor[clawGrip] = 10;
+		motor[clawGrip] = -15;
 		wait1Msec(500);
 		limit = -1;
 	}
 
 	while(limit == -1)
 	{
-		motor[clawLift] = -60;
+		motor[clawLift] = -65;
 		motor[clawGrip] = 10;
 		wait1Msec(500);
 		limit = 0;
@@ -43,8 +43,8 @@ task main()
 
 	while(limit == 1)
 	{
-		motor[RFWheel] = -50;
-		motor[RBWheel] = -50;
+		motor[RFWheel] = 50; //50
+		motor[RBWheel] = 50;
 		motor[LFWheel] = 50;
 		motor[LBWheel] = 50;
 
@@ -55,8 +55,8 @@ task main()
 
 		motor[RFWheel] = 30;
 		motor[RBWheel] = 30;
-   	motor[LFWheel] = -30;
-  	motor[LBWheel] = -30;
+   	motor[LFWheel] = 30;
+  	motor[LBWheel] = 30;
   	wait1Msec(100);
 
 		motor[clawLift] = 0;
@@ -75,8 +75,8 @@ task main()
 	{
 		motor[clawGrip] = 50;
 
-		motor[RFWheel] = 50;
-   	motor[RBWheel] = 50;
+		motor[RFWheel] = -50;
+   	motor[RBWheel] = -50;
   	motor[LFWheel] = -50;
   	motor[LBWheel] = -50;
 		wait1Msec(2000);
@@ -93,3 +93,16 @@ task main()
   	motor[clawLift] = 0;
 	}
 }
+/* GOAL
+
+Life up the
+Move the robot forward.
+Drop the yellow cone onto the colored cone
+Pick up the colored cone.
+Move backwards
+Make a 360 degree turn
+Move forwards until bars are reached
+Lower the lift
+Move backwards.
+
+*/
