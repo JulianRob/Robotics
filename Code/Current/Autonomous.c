@@ -9,25 +9,53 @@
 
 task main()
 {
- int limit = -2;
+
+ int test = -100;
+ float limit = -2; //-2
 
 	motor[RFWheel] = 0;
 	motor[RBWheel] = 0;
 	motor[LFWheel] = 0;
 	motor[LBWheel] = 0;
 
+	while (limit == test)
+	{
+		//motor[scissorLift] = -65; //lifts scissor lift up
+		motor[FLift] = 50; //Down
+		//motor[clawLift] = 50; //arm descends
+		//motor[clawGrip] = 50; //claw grip opens
+	  //motor[RFWheel] = 50; //moves forward
+		//motor[RBWheel] = 50; //moves forward
+		//motor[LFWheel] = 50; //moves forward
+		//motor[LBWheel] = 50; //moves forward
+	}
+
 	while(limit == -2)
 	{
-		motor[clawLift] = 60;
-		motor[clawGrip] = -15;
+		motor[clawLift] = -60; //arm lifts
+		motor[clawGrip] = -17; //grips closes
 		wait1Msec(500);
 		limit = -1;
 	}
 
 	while(limit == -1)
 	{
-		motor[clawLift] = -65;
-		motor[clawGrip] = 10;
+		motor[clawLift] = 65; //arm lowers
+		motor[clawGrip] = -10; //grip closes
+		wait1Msec(1000);
+		limit = -0.5;
+	}
+
+	while(limit == -0.5)
+	{
+			motor[clawGrip] = -50;
+			wait1Msec(500);
+			limit = -0.2;
+	}
+
+	while(limit == -0.2)
+	{
+		motor[clawLift] = -50;
 		wait1Msec(500);
 		limit = 0;
 	}
@@ -35,7 +63,7 @@ task main()
 	while(limit == 0) //This turns right.
 	{
 	 motor[clawGrip] = -50;
-	 motor[scissorLift] = -50;
+ 	 motor[scissorLift] = -50;
 	 motor[clawLift] = 0;
 	 wait1Msec(1000);
 	 limit = 1;
@@ -43,21 +71,21 @@ task main()
 
 	while(limit == 1)
 	{
-		motor[RFWheel] = 50; //50
+		motor[RFWheel] = 50; //goes forward
 		motor[RBWheel] = 50;
 		motor[LFWheel] = 50;
 		motor[LBWheel] = 50;
 
 		motor[scissorLift] = 0;
 
-	 	motor[clawLift] = 90;
-		wait1Msec(5000);
+	 	motor[clawLift] = -90;
+		wait1Msec(3900); //3046
 
-		motor[RFWheel] = 30;
-		motor[RBWheel] = 30;
-   	motor[LFWheel] = 30;
-  	motor[LBWheel] = 30;
-  	wait1Msec(100);
+		motor[RFWheel] = -20;
+		motor[RBWheel] = -20;
+   	motor[LFWheel] = -20;
+  	motor[LBWheel] = -20;
+  	wait1Msec(600);
 
 		motor[clawLift] = 0;
 		motor[clawGrip] = 0;
@@ -68,8 +96,31 @@ task main()
   	motor[LBWheel] = 0;
 
 		wait1Msec(2000);
-		limit = 2;
+		limit = 2.1;
 	}
+
+	while(limit == 2.1)
+	{
+		motor[clawGrip] = 45;
+		wait1Msec(500);
+
+		motor[clawGrip] = 0;
+		motor[scissorLift] = -80;
+		wait1Msec(1000);
+
+		motor[scissorLift] = 0;
+		motor[RFWheel] = 50;
+		motor[RBWheel] = 50;
+		motor[LFWheel] = 50;
+		motor[LBWheel] = 50;
+		wait1Msec(200);
+		motor[RFWheel] = 0;
+		motor[RBWheel] = 0;
+		motor[LFWheel] = 0;
+		motor[LBWheel] = 0;
+
+		limit = 100;
+  }
 
 	while(limit == 2)
 	{
@@ -79,7 +130,7 @@ task main()
    	motor[RBWheel] = -50;
   	motor[LFWheel] = -50;
   	motor[LBWheel] = -50;
-		wait1Msec(2000);
+		wait1Msec(1000);
 		limit = 3;
 	}
 
@@ -95,7 +146,7 @@ task main()
 }
 /* GOAL
 
-Life up the
+Life up the claw
 Move the robot forward.
 Drop the yellow cone onto the colored cone
 Pick up the colored cone.

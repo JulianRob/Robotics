@@ -31,11 +31,11 @@ task main()
 			motor[FLift] = 0;
 		}
 
-		if(vexRT[Btn5U] == 1)
+		if(vexRT[Btn5D] == 1)
 		{
 			motor[clawLift] = 80;
 		}
-		else if(vexRT[Btn5D] == 1)
+		else if(vexRT[Btn5U] == 1)
 		{
 			motor[clawLift] = -80;
 		}
