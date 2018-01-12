@@ -19,12 +19,12 @@ task main()
 
 		if(vexRT[Btn7U] == 1) //WHEN SHOULDER BUTTON 5U IS PUSHED, THEN THE LEFT CLAW MOTOR WILL BE SET TO 20
 		{
-			motor[FLift] = -90;
+			motor[FLift] = -100;
 		}
 
 		else if(vexRT[Btn7D] == 1) //WHEN SHOULDER BUTTON 5D IS PUSHED, THEN THE LEFT CLAW MOTOR WILL BE SET TO -20
 		{
-			motor[FLift] = 90;
+			motor[FLift] = 100;
 		}
 		else
 		{

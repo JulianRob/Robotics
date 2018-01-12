@@ -9,7 +9,6 @@
 
 task main()
 {
-
  int test = -100;
  float limit = -2; //-2
 
@@ -21,11 +20,11 @@ task main()
 	while (limit == test)
 	{
 		//motor[scissorLift] = -65; //lifts scissor lift up
-		motor[FLift] = 50; //Down
+  	motor[FLift] = 50; //Down
 		//motor[clawLift] = 50; //arm descends
 		//motor[clawGrip] = 50; //claw grip opens
-	  //motor[RFWheel] = 50; //moves forward
-		//motor[RBWheel] = 50; //moves forward
+	  //motor[RFWheel] = 100; //moves forward
+		//motor[RBWheel] = 100; //moves forward
 		//motor[LFWheel] = 50; //moves forward
 		//motor[LBWheel] = 50; //moves forward
 	}
@@ -63,29 +62,27 @@ task main()
 	while(limit == 0) //This turns right.
 	{
 	 motor[clawGrip] = -50;
- 	 motor[scissorLift] = -50;
 	 motor[clawLift] = 0;
-	 wait1Msec(1000);
 	 limit = 1;
 	}
 
 	while(limit == 1)
 	{
-		motor[RFWheel] = 50; //goes forward
-		motor[RBWheel] = 50;
-		motor[LFWheel] = 50;
-		motor[LBWheel] = 50;
+		motor[RFWheel] = 80; //goes forward
+		motor[RBWheel] = 80;
+		motor[LFWheel] = 80;
+		motor[LBWheel] = 80;
 
 		motor[scissorLift] = 0;
 
 	 	motor[clawLift] = -90;
-		wait1Msec(3900); //3046
+		wait1Msec(3300); //3046
 
-		motor[RFWheel] = -20;
-		motor[RBWheel] = -20;
-   	motor[LFWheel] = -20;
-  	motor[LBWheel] = -20;
-  	wait1Msec(600);
+		motor[RFWheel] = -25;
+		motor[RBWheel] = -25;
+   	motor[LFWheel] = -25;
+  	motor[LBWheel] = -25;
+  	wait1Msec(500);
 
 		motor[clawLift] = 0;
 		motor[clawGrip] = 0;
@@ -94,8 +91,6 @@ task main()
 		motor[RBWheel] = 0;
    	motor[LFWheel] = 0;
   	motor[LBWheel] = 0;
-
-		wait1Msec(2000);
 		limit = 2.1;
 	}
 
@@ -105,44 +100,63 @@ task main()
 		wait1Msec(500);
 
 		motor[clawGrip] = 0;
-		motor[scissorLift] = -80;
-		wait1Msec(1000);
+		motor[scissorLift] = -100;
+		wait1Msec(2000);
 
 		motor[scissorLift] = 0;
 		motor[RFWheel] = 50;
 		motor[RBWheel] = 50;
 		motor[LFWheel] = 50;
 		motor[LBWheel] = 50;
-		wait1Msec(200);
+		wait1Msec(500);
+
 		motor[RFWheel] = 0;
 		motor[RBWheel] = 0;
 		motor[LFWheel] = 0;
 		motor[LBWheel] = 0;
+		motor[FLift] = -100;
+		wait1Msec(3000);
 
-		limit = 100;
-  }
+		motor[FLift] = 0;
+		motor[RFWheel] = -80;
+		motor[RBWheel] = -80;
+   	motor[LFWheel] = -80;
+  	motor[LBWheel] = -80;
+		wait1Msec(2000);
 
-	while(limit == 2)
-	{
-		motor[clawGrip] = 50;
+		motor[RFWheel] = 80;
+		motor[RBWheel] = 80;
+		motor[LFWheel] = -10;
+  	motor[LBWheel] = -10;
+  	wait1Msec(3000);
 
-		motor[RFWheel] = -50;
-   	motor[RBWheel] = -50;
-  	motor[LFWheel] = -50;
-  	motor[LBWheel] = -50;
-		wait1Msec(1000);
-		limit = 3;
-	}
+  	motor[RFWheel] = 100;
+		motor[RBWheel] = 100;
+		motor[LFWheel] = 100;
+  	motor[LBWheel] = 100;
+		wait1Msec(2000);
 
-	while(limit == 3)
-	{
 		motor[RFWheel] = 0;
 		motor[RBWheel] = 0;
-   	motor[LFWheel] = 0;
+		motor[LFWheel] = 0;
   	motor[LBWheel] = 0;
-  	motor[clawGrip] = 0;
-  	motor[clawLift] = 0;
-	}
+  	motor[FLift] = 100;
+  	wait1Msec(3000);
+
+  	motor[FLift] = 0;
+  	motor[RFWheel] = -50;
+		motor[RBWheel] = -50;
+		motor[LFWheel] = -50;
+  	motor[LBWheel] = -50;
+  	wait1Msec(2000);
+
+  	motor[RFWheel] = 0;
+		motor[RBWheel] = 0;
+		motor[LFWheel] = 0;
+  	motor[LBWheel] = 0;
+
+		limit = 2.2;
+  }
 }
 /* GOAL
 
