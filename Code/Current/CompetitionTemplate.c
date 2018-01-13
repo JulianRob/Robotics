@@ -155,6 +155,19 @@ task autonomous()
 		wait1Msec(2000);
 
 		motor[scissorLift] = 0;
+		motor[RFWheel] = -50;
+		motor[RBWheel] = -50;
+		motor[LFWheel] = -50;
+		motor[LBWheel] = -50;
+
+		wait1Msec(2000);
+		motor[RFWheel] = 0;
+		motor[RBWheel] = 0;
+		motor[LFWheel] = 0;
+		motor[LBWheel] = 0;
+
+		wait1Msec(20000);
+
 		motor[RFWheel] = 50;
 		motor[RBWheel] = 50;
 		motor[LFWheel] = 50;
