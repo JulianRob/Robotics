@@ -1,4 +1,4 @@
-#pragma config(Motor,  port2,           clawGrip,      tmotorVex393_MC29, openLoop)           //2 Opens and Closes Claw
+#pragma config(Motor,  port2,           clawGrip,      tmotorVex393_MC29, openLoop)           //2 Opens and Closes
 #pragma config(Motor,  port3,           RFWheel,       tmotorVex393_MC29, openLoop, reversed) //3 Right Front Wheel
 #pragma config(Motor,  port4,           LBWheel,       tmotorVex393_MC29, openLoop)           //4 Left Back Wheel
 #pragma config(Motor,  port5,           LFWheel,       tmotorVex393_MC29, openLoop)					  //5 Left Front Wheel
@@ -6,10 +6,6 @@
 #pragma config(Motor,  port7,           scissorLift,   tmotorVex393_MC29, openLoop, reversed) //7 Scissorlift
 #pragma config(Motor,  port8,           clawLift,      tmotorVex393_MC29, openLoop)           //8 Lifts up the claw
 #pragma config(Motor,  port9,           FLift,         tmotorVex393_MC29, openLoop, reversed) //9 Fork Lift
-
-//left front and left back are now port 7
-//left scissorlift is port 4 and right scissor lift is port 5.
-//right front and right back are now in 3 (3 and 6 are in 3)
 
 /*---------------------------------------------------------------------------*/
 /*                                                                           */
@@ -65,7 +61,7 @@ void pre_auton()
 task autonomous()
 {
  	int test = -100;
- float limit = -2; //-2
+	float limit = -2; //-2
 
 	motor[RFWheel] = 0;
 	motor[RBWheel] = 0;
@@ -75,7 +71,7 @@ task autonomous()
 	while (limit == test)
 	{
 		//motor[scissorLift] = -65; //lifts scissor lift up
-  	motor[FLift] = 100; //Down
+  	motor[FLift] = 50; //Down
 		//motor[clawLift] = 50; //arm descends
 		//motor[clawGrip] = 50; //claw grip opens
 	  //motor[RFWheel] = 100; //moves forward
@@ -159,6 +155,19 @@ task autonomous()
 		wait1Msec(2000);
 
 		motor[scissorLift] = 0;
+		motor[RFWheel] = -50;
+		motor[RBWheel] = -50;
+		motor[LFWheel] = -50;
+		motor[LBWheel] = -50;
+
+		wait1Msec(2000);
+		motor[RFWheel] = 0;
+		motor[RBWheel] = 0;
+		motor[LFWheel] = 0;
+		motor[LBWheel] = 0;
+
+		wait1Msec(20000); //TIME IS REALLY HIGH
+
 		motor[RFWheel] = 50;
 		motor[RBWheel] = 50;
 		motor[LFWheel] = 50;
@@ -170,7 +179,7 @@ task autonomous()
 		motor[LFWheel] = 0;
 		motor[LBWheel] = 0;
 		motor[FLift] = -100;
-		wait1Msec(1000); //Change time for lowering (used to be 3000)
+		wait1Msec(3000);
 
 		motor[FLift] = 0;
 		motor[RFWheel] = -80;
@@ -196,7 +205,7 @@ task autonomous()
 		motor[LFWheel] = 0;
   	motor[LBWheel] = 0;
   	motor[FLift] = 100;
-  	wait1Msec(1000); //Change time for lowering (used to be 3000)
+  	wait1Msec(3000);
 
   	motor[FLift] = 0;
   	motor[RFWheel] = -50;

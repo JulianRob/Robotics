@@ -20,7 +20,7 @@ task main()
 	while (limit == test)
 	{
 		//motor[scissorLift] = -65; //lifts scissor lift up
-  	motor[FLift] = 50; //Down
+  	motor[FLift] = 100; //Down
 		//motor[clawLift] = 50; //arm descends
 		//motor[clawGrip] = 50; //claw grip opens
 	  //motor[RFWheel] = 100; //moves forward
@@ -115,7 +115,7 @@ task main()
 		motor[LFWheel] = 0;
 		motor[LBWheel] = 0;
 		motor[FLift] = -100;
-		wait1Msec(3000);
+		wait1Msec(1000); //Change time for lowering (used to be 3000)
 
 		motor[FLift] = 0;
 		motor[RFWheel] = -80;
@@ -141,7 +141,7 @@ task main()
 		motor[LFWheel] = 0;
   	motor[LBWheel] = 0;
   	motor[FLift] = 100;
-  	wait1Msec(3000);
+  	wait1Msec(1000); //Change time for lowering (used to be 3000)
 
   	motor[FLift] = 0;
   	motor[RFWheel] = -50;
