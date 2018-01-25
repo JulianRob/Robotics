@@ -1,14 +1,13 @@
 #pragma config(Motor,  port2,           clawGrip,      tmotorVex393_MC29, openLoop)           //2 Opens and Closes Claw
-#pragma config(Motor,  port3,           RFWheel,       tmotorVex393_MC29, openLoop, reversed) //3 Right Front Wheel
-#pragma config(Motor,  port4,           LBWheel,       tmotorVex393_MC29, openLoop)           //4 Left Back Wheel
-#pragma config(Motor,  port5,           LFWheel,       tmotorVex393_MC29, openLoop)					  //5 Left Front Wheel
-#pragma config(Motor,  port6,           RBWheel,       tmotorVex393_MC29, openLoop, reversed) //6 Right Back Wheel
-#pragma config(Motor,  port7,           scissorLift,   tmotorVex393_MC29, openLoop, reversed) //7 Scissorlift
+#pragma config(Motor,  port6,           RWheel,        tmotorVex393_MC29, openLoop)           //3 Right Wheels
+#pragma config(Motor,  port4,           RScissorLift,       tmotorVex393_MC29, openLoop)      //4 Left scissorLift
+#pragma config(Motor,  port5,           LScissorLift,       tmotorVex393_MC29, openLoop)		  //5 Right ScissorLift
+#pragma config(Motor,  port7,           LWheel,  			 tmotorVex393_MC29, openLoop) 					//7 Left wheels
 #pragma config(Motor,  port8,           clawLift,      tmotorVex393_MC29, openLoop)           //8 Lifts up the claw
 #pragma config(Motor,  port9,           FLift,         tmotorVex393_MC29, openLoop, reversed) //9 Fork Lift
 
-//left front and left back are now port 7
-//left scissorlift is port 4 and right scissor lift is port 5.
+//left front and left back are now port 7 (OK)
+//left scissorlift is port 4 and right scissor lift is port 5. (OK)
 //right front and right back are now in 3 (3 and 6 are in 3)
 
 /*---------------------------------------------------------------------------*/
@@ -65,12 +64,10 @@ void pre_auton()
 task autonomous()
 {
  	int test = -100;
- float limit = -2; //-2
+  float limit = -2; //-2
 
-	motor[RFWheel] = 0;
-	motor[RBWheel] = 0;
-	motor[LFWheel] = 0;
-	motor[LBWheel] = 0;
+	motor[RWheel] = 0;
+	motor[LWheel] = 0;
 
 	while (limit == test)
 	{
@@ -81,7 +78,6 @@ task autonomous()
 	  //motor[RFWheel] = 100; //moves forward
 		//motor[RBWheel] = 100; //moves forward
 		//motor[LFWheel] = 50; //moves forward
-		//motor[LBWheel] = 50; //moves forward
 	}
 
 	while(limit == -2)
@@ -123,29 +119,24 @@ task autonomous()
 
 	while(limit == 1)
 	{
-		motor[RFWheel] = 80; //goes forward
-		motor[RBWheel] = 80;
-		motor[LFWheel] = 80;
-		motor[LBWheel] = 80;
+		motor[RWheel] = 80;
+		motor[LWheel] = 80;
 
-		motor[scissorLift] = 0;
+		motor[LScissorLift] = 0;
+		motor[RScissorLift] = 0;
 
 	 	motor[clawLift] = -90;
 		wait1Msec(3300); //3046
 
-		motor[RFWheel] = -25;
-		motor[RBWheel] = -25;
-   	motor[LFWheel] = -25;
-  	motor[LBWheel] = -25;
+		motor[RWheel] = -25;
+  	motor[LWheel] = -25;
   	wait1Msec(500);
 
 		motor[clawLift] = 0;
 		motor[clawGrip] = 0;
 
-		motor[RFWheel] = 0;
-		motor[RBWheel] = 0;
-   	motor[LFWheel] = 0;
-  	motor[LBWheel] = 0;
+		motor[RWheel] = 0;
+  	motor[LWheel] = 0;
 		limit = 2.1;
 	}
 
@@ -155,60 +146,49 @@ task autonomous()
 		wait1Msec(500);
 
 		motor[clawGrip] = 0;
-		motor[scissorLift] = -100;
+
+		motor[LScissorLift] = -100;
+		motor[RScissorLift] = -100;
+
 		wait1Msec(2000);
 
-		motor[scissorLift] = 0;
-		motor[RFWheel] = 50;
-		motor[RBWheel] = 50;
-		motor[LFWheel] = 50;
-		motor[LBWheel] = 50;
+		motor[LScissorLift] = 0;
+		motor[RScissorLift] = 0;
+
+		motor[RWheel] = 50;
+		motor[LWheel] = 50;
 		wait1Msec(500);
 
-		motor[RFWheel] = 0;
-		motor[RBWheel] = 0;
-		motor[LFWheel] = 0;
-		motor[LBWheel] = 0;
+		motor[RWheel] = 0;
+		motor[LWheel] = 0;
 		motor[FLift] = -100;
 		wait1Msec(1000); //Change time for lowering (used to be 3000)
 
 		motor[FLift] = 0;
-		motor[RFWheel] = -80;
-		motor[RBWheel] = -80;
-   	motor[LFWheel] = -80;
-  	motor[LBWheel] = -80;
+		motor[RWheel] = -80;
+   	motor[LWheel] = -80;
 		wait1Msec(2000);
 
-		motor[RFWheel] = 80;
-		motor[RBWheel] = 80;
-		motor[LFWheel] = -10;
-  	motor[LBWheel] = -10;
+		motor[RWheel] = 80;
+  	motor[LWheel] = -10;
   	wait1Msec(3000);
 
-  	motor[RFWheel] = 100;
-		motor[RBWheel] = 100;
-		motor[LFWheel] = 100;
-  	motor[LBWheel] = 100;
+  	motor[RWheel] = 100;
+  	motor[LWheel] = 100;
 		wait1Msec(2000);
 
-		motor[RFWheel] = 0;
-		motor[RBWheel] = 0;
-		motor[LFWheel] = 0;
-  	motor[LBWheel] = 0;
+		motor[RWheel] = 0;
+  	motor[LWheel] = 0;
   	motor[FLift] = 100;
   	wait1Msec(1000); //Change time for lowering (used to be 3000)
 
   	motor[FLift] = 0;
-  	motor[RFWheel] = -50;
-		motor[RBWheel] = -50;
-		motor[LFWheel] = -50;
-  	motor[LBWheel] = -50;
+  	motor[RWheel] = -50;
+  	motor[LWheel] = -50;
   	wait1Msec(2000);
 
-  	motor[RFWheel] = 0;
-		motor[RBWheel] = 0;
-		motor[LFWheel] = 0;
-  	motor[LBWheel] = 0;
+		motor[RWheel] = 0;
+  	motor[LWheel] = 0;
 
 		limit = 2.2;
   }
@@ -228,11 +208,9 @@ task usercontrol()
 {
   while (1 == 1)
 	{
-		motor[RFWheel] = vexRT(Ch2)*1; //-2? lol
-		motor[RBWheel] = vexRT(Ch2)*1;
+		motor[RWheel] = vexRT(Ch2)*1;
 
-		motor[LFWheel] = vexRT(Ch3)*1;
-		motor[LBWheel] = vexRT(Ch3)*1;
+		motor[LWheel] = vexRT(Ch3)*1;
 
 		if(vexRT[Btn7U] == 1) //WHEN SHOULDER BUTTON 5U IS PUSHED, THEN THE LEFT CLAW MOTOR WILL BE SET TO 20
 		{
@@ -276,15 +254,18 @@ task usercontrol()
 
 		if(vexRT[Btn6D] == 1)
 		{
-			motor[scissorLift] = 100;
+			motor[LScissorLift] = 100;
+			motor[RScissorLift] = 100;
 		}
 		else if(vexRT[Btn6U] == 1)
 		{
-			motor[scissorLift] = -100;
+			motor[LScissorLift] = -100;
+			motor[RScissorLift] = -100;
 		}
 		else
 		{
-			motor[scissorLift] = 0;
+			motor[LScissorLift] = 0;
+			motor[RScissorLift] = 0;
 		}
 	}
 }
