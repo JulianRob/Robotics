@@ -240,11 +240,11 @@ task usercontrol()
 			motor[clawLift] = 0;
 		}
 
-		if(vexRT(Btn8R) == 1)
+		if(vexRT(Btn8R) == 1) //opens
 		{
 			motor[clawGrip] = 50;
 		}
-		else if(vexRT(Btn8L) == 1)
+		else if(vexRT(Btn8L) == 1) //closes
 		{
 			motor[clawGrip]	= -50;
 		}
@@ -253,12 +253,12 @@ task usercontrol()
 			motor[clawGrip] = 0;
 		}
 
-		if(vexRT[Btn6D] == 1)
+		if(vexRT[Btn6U] == 1)
 		{
 			motor[LScissorLift] = 100;
 			motor[RScissorLift] = 100;
 		}
-		else if(vexRT[Btn6U] == 1)
+		else if(vexRT[Btn6D] == 1)
 		{
 			motor[LScissorLift] = -100;
 			motor[RScissorLift] = -100;
