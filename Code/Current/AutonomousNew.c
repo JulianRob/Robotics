@@ -6,7 +6,6 @@
 #pragma config(Motor,  port8,           clawLift,      tmotorVex393_MC29, openLoop)
 #pragma config(Motor,  port9,           FLift,         tmotorVex393_MC29, openLoop, reversed)
 
-
 		//motor[scissorLift] = -65; //lifts scissor lift up
     //motor[FLift] = 100; //Down
 		//motor[clawLift] = 50; //arm descends
@@ -26,8 +25,10 @@ task main()
 
 	while(run == true)
 	{
-		motor[clawGrip]	= -20; //closes
-		motor[clawLift] = 50; //lowers the arm
+		motor[clawGrip]	= -25; //closes
+		wait1Msec(350);
+
+		motor[clawLift] = 40; //lowers the arm
 		wait1Msec(1000);
 
 		motor[clawGrip]	= -50; //closes
